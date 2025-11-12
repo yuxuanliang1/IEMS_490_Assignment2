@@ -1,0 +1,22 @@
+:: 1) 训练（LoRA）
+python -m src.train_lora ^
+  --model_name HuggingFaceTB/SmolLM2-1.7B-Instruct ^
+  --train_csv data\train.csv ^
+  --eval_csv  data\test.csv ^
+  --output_dir models\lora-smol2-1k ^
+  --max_seq_len 1024 ^
+  --epochs 1 ^
+  --bs 1 --ga 16 ^
+  --lr 2e-4 --eval_steps 200
+
+:: 2) 推理（加载基座 + 适配器），输出到新日志
+python -m src.infer_lora ^
+  --base_model HuggingFaceTB/SmolLM2-1.7B-Instruct ^
+  --adapter_dir models\lora-smol2-1k ^
+  --test_csv data\test.csv ^
+  --out_file logs\lora_smol2_test.jsonl ^
+  --temperature 0.0 --top_p 1.0
+
+:: 3) 评测：和基线同脚本对比（包含“准确率”）
+python -m src.eval_accuracy_plus --pred_file logs\baseline_smol2_test.jsonl
+python -m src.eval_accuracy_plus --pred_file logs\lora_smol2_test.jsonl

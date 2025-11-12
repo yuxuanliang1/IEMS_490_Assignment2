@@ -1,0 +1,43 @@
+# Python/Conda/Notebook
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints/
+.venv/
+.env
+.conda/
+.conda_env/
+
+# IDE
+.vscode/
+.idea/
+.history/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# HF/Torch Cache
+cache/
+.cache/
+hf-cache/
+datasets/
+transformers_cache/
+torch_cache/
+
+# Training/infer
+logs/
+outputs/
+
+# Models
+models/**
+!models/.gitkeep
+
+# Data
+data/**
+!data/.gitkeep
+!data/train.csv
+!data/test.csv
+
+# Temp files from Windows batch/scripts
+*.bat~
+*.tmp
